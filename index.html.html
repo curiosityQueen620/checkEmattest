@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-pXUHx-P1B36E4-q-3pXyG.js"></script>
+<script>
+  window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) };
+  plausible.init = plausible.init || function(i) { plausible.o = i || {} };
+  plausible.init();
+</script>
+<title>checkEm — know who he really is, before the first date</title>
+<meta name="description" content="Verify a match's real name, marital status, and record before you meet. Consent-based. You share nothing." />
+<style>
+  /* ---------- checkEm tokens ----------
+     Palette: honesty, not alarm. Warm paper + ink, a single trustworthy
+     teal-green "verified" accent, a soft clay for warmth. No red, no shields.
+     Type: Fraunces (editorial, human, a little literary) for display;
+           Inter for body/UI (clean, legible, trustworthy).
+  */
+  :root {
+    --paper:   #FBF8F3;   /* warm off-white */
+    --paper-2: #F3ECE1;   /* card / panel */
+    --ink:     #23201C;   /* near-black warm */
+    --ink-2:   #5C554C;   /* muted body */
+    --line:    #E2D8C8;   /* hairlines */
+    --verify:  #2F7A6B;   /* teal-green = verified, calm, trustworthy */
+    --verify-d:#245F53;
+    --clay:    #C77B54;   /* warmth accent, used sparingly */
+    --focus:   #2F7A6B;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#1A1815; --paper-2:#221F1B; --ink:#F3ECE1; --ink-2:#B7ADA0;
+      --line:#3A342D; --verify:#5FB3A1; --verify-d:#7FC7B7; --clay:#DB9670;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+  .wrap { max-width: 620px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- header ---------- */
+  header { padding: 40px 0 8px; }
+  .brand {
+    font-family: 'Fraunces', Georgia, serif; font-weight: 600;
+    font-size: 22px; letter-spacing: -0.01em; display: inline-flex; align-items: baseline; gap: 2px;
+  }
+  .brand .mark { color: var(--verify); }
+  .eyebrow {
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-2); font-weight: 600; margin-top: 40px;
+  }
+
+  /* ---------- hero ---------- */
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500; font-size: clamp(34px, 7vw, 52px);
+    line-height: 1.06; letter-spacing: -0.02em; margin: 14px 0 0;
+  }
+  h1 .accent { font-style: italic; color: var(--verify); }
+  .sub { font-size: 18px; color: var(--ink-2); margin-top: 20px; max-width: 34em; }
+
+  /* ---------- the badge (signature element) ---------- */
+  .badge {
+    margin: 36px 0 8px; background: var(--paper-2);
+    border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 22px; position: relative;
+  }
+  .badge::before {
+    content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 3px;
+    background: var(--verify); border-radius: 3px;
+  }
+  .badge .b-head { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 14px; }
+  .b-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--verify); flex: none; }
+  .badge .b-line { font-size: 15px; color: var(--ink); margin-top: 10px; }
+  .badge .b-line span { color: var(--ink-2); }
+  .badge .b-foot { font-size: 12.5px; color: var(--ink-2); margin-top: 12px; font-style: italic; }
+  .b-caption { font-size: 12.5px; color: var(--ink-2); margin-top: 12px; }
+
+  /* ---------- CTA ---------- */
+  .cta-row { margin: 30px 0 10px; }
+  .cta {
+    font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 600;
+    color: #fff; background: var(--verify); border: none; border-radius: 11px;
+    padding: 16px 26px; cursor: pointer; width: 100%; transition: background .18s ease, transform .1s ease;
+  }
+  .cta:hover { background: var(--verify-d); }
+  .cta:active { transform: translateY(1px); }
+  .cta:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+  .honest {
+    font-size: 13px; color: var(--ink-2); margin-top: 12px; text-align: center;
+  }
+  .honest strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- how it works ---------- */
+  .how { margin: 56px 0 0; }
+  .how h2 {
+    font-family: 'Fraunces', serif; font-weight: 500; font-size: 24px; letter-spacing: -0.01em;
+    margin-bottom: 22px;
+  }
+  .step { display: flex; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); }
+  .step:last-child { border-bottom: 1px solid var(--line); }
+  .step .n {
+    font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600; color: var(--verify);
+    flex: none; width: 24px; padding-top: 1px;
+  }
+  .step .t { font-size: 15.5px; }
+  .step .t b { font-weight: 600; }
+  .step .t span { color: var(--ink-2); }
+
+  /* ---------- honesty strip ---------- */
+  .principles { margin: 48px 0 0; display: grid; gap: 2px; }
+  .principle { font-size: 15px; padding: 12px 0; display: flex; gap: 11px; align-items: baseline; }
+  .principle .k { color: var(--verify); font-weight: 600; flex: none; }
+  .principle span { color: var(--ink-2); }
+
+  /* ---------- footer ---------- */
+  footer { margin: 56px 0 48px; padding-top: 22px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--ink-2); }
+  footer a { color: var(--verify); text-decoration: none; }
+
+  /* ---------- modal (the honest "not live yet") ---------- */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(20,18,15,.55);
+    display: none; align-items: center; justify-content: center; padding: 22px; z-index: 50;
+    backdrop-filter: blur(3px);
+  }
+  .overlay.show { display: flex; }
+  .modal {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 18px;
+    max-width: 440px; width: 100%; padding: 32px 28px; text-align: left;
+    box-shadow: 0 24px 60px rgba(20,18,15,.22); animation: pop .22s ease;
+  }
+  @keyframes pop { from { transform: translateY(10px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
+  .modal .m-eyebrow { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--verify); font-weight: 600; }
+  .modal h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 26px; letter-spacing: -0.01em; margin: 10px 0 12px; line-height: 1.15; }
+  .modal p { font-size: 15px; color: var(--ink-2); margin-bottom: 8px; }
+  .modal form { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .modal input[type=email] {
+    font-family: inherit; font-size: 16px; padding: 14px 15px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--paper-2); color: var(--ink);
+  }
+  .modal input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; border-color: var(--verify); }
+  .modal .notify {
+    font-size: 16px; font-weight: 600; color: #fff; background: var(--verify);
+    border: none; border-radius: 10px; padding: 14px; cursor: pointer;
+  }
+  .modal .notify:hover { background: var(--verify-d); }
+  .modal .thanks { display: none; font-size: 15px; color: var(--ink); margin-top: 14px; }
+  .modal .thanks.show { display: block; }
+  .modal .close { background: none; border: none; color: var(--ink-2); font-size: 14px; margin-top: 16px; cursor: pointer; text-decoration: underline; padding: 0; }
+  .modal .m-price { font-size: 13px; color: var(--ink-2); margin-top: 4px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">check<span class="mark">Em</span></div>
+    </header>
+
+    <main>
+      <p class="eyebrow">For online dating</p>
+      <h1 id="hero-h1">Know who he <span class="accent">really is</span>, before the first date.</h1>
+      <p class="sub" id="hero-sub">He verifies himself once — real name, marital status, record — and sends you a simple badge. You share nothing. No searching, no snooping, no exposing your own information.</p>
+
+      <!-- SIGNATURE ELEMENT: the actual badge, "facts not grades" -->
+      <div class="badge" aria-label="Example verification badge">
+        <div class="b-head"><span class="b-dot"></span> Verified badge · example</div>
+        <div class="b-line">ID confirmed. Attested <b>single</b>. <span>No criminal records found in MN, WI, IA</span> as of Aug 11, 2026.</div>
+        <div class="b-foot">This states what was checked and when. It does not say "safe" — you decide that.</div>
+      </div>
+      <p class="b-caption">Facts, not a verdict. The badge shows what was verified; the judgment stays yours.</p>
+
+      <div class="cta-row">
+        <button class="cta" id="verifyBtn" data-price="5">Verify a match — $5</button>
+        <p class="honest">We're validating this before we build it, so <strong>you won't be charged today.</strong></p>
+      </div>
+
+      <section class="how">
+        <h2>How it works</h2>
+        <div class="step"><div class="n">1</div><div class="t"><b>He verifies himself.</b> <span>He confirms his identity against a government ID and attests to a few facts before anything is searched.</span></div></div>
+        <div class="step"><div class="n">2</div><div class="t"><b>A check runs across states.</b> <span>Public records in your region — marriage, criminal — with a clear map of exactly what was and wasn't searched.</span></div></div>
+        <div class="step"><div class="n">3</div><div class="t"><b>You get a dated badge.</b> <span>One link, in minutes. It expires, because a check is a snapshot and pretending otherwise would be dishonest.</span></div></div>
+      </section>
+
+      <section class="principles" aria-label="What checkEm will and won't do">
+        <div class="principle"><span class="k">Never</span><span>tells you someone is "safe." That's your call, not an app's.</span></div>
+        <div class="principle"><span class="k">Never</span><span>stores or exposes anything about you. You stay invisible.</span></div>
+        <div class="principle"><span class="k">Never</span><span>hides gaps. If a state wasn't searched, you'll see it.</span></div>
+        <div class="principle"><span class="k">Always</span><span>with his consent. He chooses to be verified — honesty, offered.</span></div>
+      </section>
+    </main>
+
+    <footer>
+      checkEm is an early-stage project being validated before it's built. It is not yet available, and it is not a background-check service for employment, tenancy, or credit. <br /><br />
+      Questions? <a href="mailto:hello@checkem.example">hello@checkem.example</a>
+    </footer>
+  </div>
+
+  <!-- HONEST "not live yet" modal -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="m-eyebrow">You're early</div>
+      <h3 id="modalTitle">checkEm isn't live yet.</h3>
+      <p>We're building it now — and honestly, we're measuring who actually wants it before we spend months making it. You reaching for that button <em>is</em> the signal we needed. Thank you.</p>
+      <p>Want to be first in line when it launches?</p>
+      <form id="notifyForm">
+        <input type="email" id="email" placeholder="you@email.com" aria-label="Your email" required />
+        <button type="submit" class="notify">Notify me at launch</button>
+        <p class="m-price" id="priceEcho"></p>
+      </form>
+      <p class="thanks" id="thanks">You're on the list. We'll only email you when it's real. 💛</p>
+      <button class="close" id="closeBtn">No thanks, just looking</button>
+    </div>
+  </div>
+
+<script>
+/* -------------------------------------------------------------
+   checkEm fake-door — measurement + ethical flow
+   -------------------------------------------------------------
+   WHAT THIS MEASURES (the whole point):
+   - visit               : someone loaded the page
+   - price_variant       : which $ they saw (A/B)
+   - verify_click        : reached for the buy button  <-- KEY metric
+   - email_submit        : gave email after the honest screen
+   NO card is ever collected. Nothing false is stated. The test
+   stops at "we're building it," which is true.
+
+   HOW TO WIRE UP REAL ANALYTICS:
+   Replace the track() body with your tool of choice, e.g.
+     Plausible:  window.plausible && plausible(event, {props: data})
+     GA4:        gtag('event', event, data)
+     Simple:     fetch('/track', {method:'POST', body: JSON.stringify({event,data})})
+   Until you wire one up, events log to the console so you can test the flow.
+------------------------------------------------------------- */
+
+// --- price A/B: randomly show $5 / $10 / $20, remember per-visitor for the session ---
+const PRICES = [5, 10, 20];
+let price = Number(sessionStorage.getItem('ce_price'));
+if (!PRICES.includes(price)) {
+  price = PRICES[Math.floor(Math.random() * PRICES.length)];
+  sessionStorage.setItem('ce_price', price);
+}
+const btn = document.getElementById('verifyBtn');
+btn.textContent = `Verify a match — $${price}`;
+btn.dataset.price = price;
+
+/* --- MESSAGING A/B: which value frame converts better? ---
+   A = net-new / worried-middle ("know before you invest")
+   B = substitution / proven-wallet ("a safer BeenVerified — no self-exposure")
+   This is the higher-value test: does the proven-wallet framing (switch from
+   an existing paid tool) beat the net-new framing? Reported alongside price. */
+const FRAMES = {
+  A: {
+    h1: 'Know who he <span class="accent">really is</span>, before the first date.',
+    sub: 'He verifies himself once — real name, marital status, record — and sends you a simple badge. You share nothing. No searching, no snooping, no exposing your own information.',
+    cta: (p) => `Verify a match — $${p}`
+  },
+  B: {
+    h1: 'A safer way to <span class="accent">check him</span> — without exposing yourself.',
+    sub: 'Reverse lookups and background sites make you hand over his name or number — and expose your own. checkEm flips it: he verifies himself, you get the facts, you share nothing.',
+    cta: (p) => `Get the facts — $${p}`
+  }
+};
+let frame = sessionStorage.getItem('ce_frame');
+if (!['A','B'].includes(frame)) {
+  frame = Math.random() < 0.5 ? 'A' : 'B';
+  sessionStorage.setItem('ce_frame', frame);
+}
+document.getElementById('hero-h1').innerHTML = FRAMES[frame].h1;
+document.getElementById('hero-sub').textContent = FRAMES[frame].sub;
+btn.textContent = FRAMES[frame].cta(price);
+
+function track(event, data = {}) {
+  const props = { price: String(price), frame, ...data };
+  // send to Plausible as a custom event with props
+  if (window.plausible) { window.plausible(event, { props }); }
+  console.log('[checkEm]', event, props);
+}
+
+track('visit', { price_variant: price, frame });
+
+const overlay = document.getElementById('overlay');
+const closeBtn = document.getElementById('closeBtn');
+const form = document.getElementById('notifyForm');
+const thanks = document.getElementById('thanks');
+const priceEcho = document.getElementById('priceEcho');
+
+btn.addEventListener('click', () => {
+  track('verify_click', { price_variant: price, frame });   // <-- THE signal
+  priceEcho.textContent = `(You clicked the $${price} option — noted, that helps us a lot.)`;
+  overlay.classList.add('show');
+  document.getElementById('email').focus();
+});
+
+function closeModal() { overlay.classList.remove('show'); }
+closeBtn.addEventListener('click', () => { track('modal_dismiss'); closeModal(); });
+overlay.addEventListener('click', (e) => { if (e.target === overlay) { track('modal_dismiss'); closeModal(); } });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('show')) { track('modal_dismiss'); closeModal(); } });
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  if (!email) return;
+  track('email_submit', { price_variant: price, frame });
+  // Save the email to Formspree
+  try {
+    await fetch('https://formspree.io/f/maewoqnk', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, price: String(price), frame })
+    });
+  } catch (err) { console.log('formspree error', err); }
+  form.style.display = 'none';
+  thanks.classList.add('show');
+});
+</script>
+</body>
+</html>
